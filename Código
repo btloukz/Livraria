@@ -18,95 +18,111 @@ class Livraria:
         print(f'Valor total em estoque: R${self.valor * self.estoque:.2f}'.replace(".", ","))
         print()
 
-lista = []
+def cadastra():
+    repetido = True
+    titulo = input('Título do livro: ')
+    while repetido:
+        codigo = input('Código do livro: ')
+        for i in lista:
+            if i.codigo == codigo:
+                print('Código ja existente, tente novamente!')
+                break
+            else:
+                repetido = False
+        else:
+            repetido = False
+            
+    editora = input('Editora do livro: ')
+    categoria = input('Categoria do livro: ')
+    ano = int(input('Ano do livro: '))
+    valor = float(input('Valor do livro em R$: '))
+    estoque = int(input('Quantidade do livro em estoque: '))
+
+    novo_livro = Livraria(titulo, codigo, editora, categoria, ano, valor, estoque)
+    lista.append(novo_livro)
+    print(f'{titulo} cadastrado com sucesso!')
+
+
+def busca_nome():
+    buscar = input('Informe o título do livro para buscarmos: ')
+    existente = False
+
+    for i in lista:
+        if buscar == i.titulo:
+            if not existente:
+                print('Livro encontrado! Abaixo suas informações;')
+                print()
+                existente = True
+            i.infoListar()
+    if not existente:
+        print('Livro inexistente!')
+
+
+def busca_categoria():
+    buscar = input('Informe a categoria do livro para buscarmos: ')
+    existente = False
+
+    for i in lista:
+        if buscar == i.categoria:
+            if not existente:
+                print(f'Livros da categoria {buscar} encontrados! Abaixo suas informações:')
+                print()
+                existente = True
+            i.infoListar()
+
+    if not existente:
+        print('Não encontrado!')
+
+
+def busca_valor():
+    preco = float(input('Informe o preço para filtrarmos: '))
+    existente = False
+
+    for i in lista:
+        if preco >= i.valor:
+            if not existente:
+                print('Aqui vão os livros com valor igual ou menor ao informado: ')
+                print()
+                existente = True
+            i.infoListar()
+
+    if not existente:
+        print('Não existem livros com valor igual ou menor ao informado!')
+
+
+def qtd_estoque():
+    qtd = int(input('Informe a quantidade em estoque para filtrarmos: '))
+    existente = False
+
+    for i in lista:
+        if qtd == i.estoque:
+            if not existente:
+                print('Livro com estoque informado encontrado! Segue abaixo...')
+                print()
+                existente = True
+            i.infoListar()
+    if not existente:
+        print('Nenhum livro com esta quantidade em estoque encontrada')
+
+
+def valor_estoque():
+    preco_estoque = float(input('Informe o valor total em estoque para buscarmos: '))
+    existente = False
+
+    for i in lista:
+        if preco_estoque <= i.valor * i.estoque:
+            if not existente:
+                print('Aqui vão os livros com valor em estoque igual ou maior ao informado: ')
+                print()
+                existente = True
+            i.infoListar()
+
+    if not existente:
+        print('Não existem valores totais em estoque com preço igual ou maior ao informado!')
 
 if __name__ == '__main__':
 
-    def cadastra():
-        titulo = input('Título do livro: ')
-        codigo = input('Código do livro: ')
-        editora = input('Editora do livro: ')
-        categoria = input('Categoria do livro: ')
-        ano = int(input('Ano do livro: '))
-        valor = float(input('Valor do livro em R$: '))
-        estoque = int(input('Quantidade do livro em estoque: '))
-
-        novo_livro = Livraria(titulo, codigo, editora, categoria, ano, valor, estoque)
-        lista.append(novo_livro)
-        print(f'{titulo} cadastrado com sucesso!')
-
-    def busca_nome():
-        buscar = input('Informe o título do livro para buscarmos: ')
-        existente = False
-
-        for i in lista:
-            if buscar == i.titulo:
-                if not existente:
-                    print('Livro encontrado! Abaixo suas informações;')
-                    print()
-                    existente = True
-                i.infoListar()
-        if not existente:
-            print('Livro inexistente!')
-
-    def busca_categoria():
-        buscar = input('Informe a categoria do livro para buscarmos: ')
-        existente = False
-
-        for i in lista:
-            if buscar == i.categoria:
-                if not existente:
-                    print(f'Livros da categoria {buscar} encontrados! Abaixo suas informações:')
-                    print()
-                    existente = True
-                i.infoListar()
-
-        if not existente:
-            print('Não encontrado!')
-
-    def busca_valor():
-        preco = float(input('Informe o preço para filtrarmos: '))
-        existente = False
-
-        for i in lista:
-            if preco >= i.valor:
-                if not existente:
-                    print('Aqui vão os livros com valor igual ou menor ao informado: ')
-                    print()
-                    existente = True
-                i.infoListar()
-
-        if not existente:
-            print('Não existem livros com valor igual ou menor ao informado!')
-
-    def qtd_estoque():
-        qtd = int(input('Informe a quantidade em estoque para filtrarmos: '))
-        existente = False
-
-        for i in lista:
-            if qtd == i.estoque:
-                if not existente:
-                    print('Livro com estoque informado encontrado! Segue abaixo...')
-                    print()
-                    existente = True
-                i.infoListar()
-        if not existente:
-            print('Nenhum livro com esta quantidade em estoque encontrada')
-
-    def valor_estoque():
-        preco_estoque = float(input('Informe o valor total em estoque para buscarmos: '))
-        existente = False
-        
-        for i in lista:
-            if preco_estoque <= i.valor * i.estoque:
-                if not existente:
-                    print('Aqui vão os livros com valor em estoque igual ou maior ao informado: ')
-                    print()
-                    existente = True
-                i.infoListar()
-
-        if not existente:
-            print('Não existem valores totais em estoque com preço igual ou maior ao informado!')
+    lista = []
 
     while True:
         escolha = int(input('1 – Cadastrar novo livro\n'
@@ -137,3 +153,6 @@ if __name__ == '__main__':
         elif escolha == 0:
             print('Encerrando atividades...')
             break
+        else:
+            print('Opção inválida/inexistente')
+            print()
